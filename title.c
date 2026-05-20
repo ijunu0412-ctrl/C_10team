@@ -1,5 +1,7 @@
 ﻿#include <stdio.h>
-#include <conio.h>   // _getch() 함수 사용
+#include <conio.h>   // _getch() 함수 
+#include <windows.h>
+
 
 //기호상수
 #define UP 72
@@ -15,6 +17,15 @@ int selectDifficulty();
 void showInstructions();
 
 int main() {
+
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(consoleHandle, &cursorInfo);
+    cursorInfo.bVisible = FALSE;
+    SetConsoleCursorInfo(consoleHandle, &cursorInfo);
+    system("cls"); //구글에서 커서 투명하게 하는 법<<이거 쳐서 복붙함
+
+
     int menuChoice;
     int difficulty = EASY; // 기본 난이도 초기화
 
