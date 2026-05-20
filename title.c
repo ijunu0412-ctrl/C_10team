@@ -1,7 +1,7 @@
 ﻿#include <stdio.h>
 #include <conio.h>   // _getch() 함수 사용
 
-// 기호 상수 정의 (요구사항 반영)
+//기호상수
 #define UP 72
 #define DOWN 80
 #define ENTER 13
