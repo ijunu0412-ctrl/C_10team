@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <conio.h>
 #include <windows.h>
 #include "game.h"
@@ -12,16 +12,16 @@ void gotoxy(int x, int y) {
 }
 
 void playwalksound() {
-	Beep(500, 15);
+	Beep(500, 7);
 }
 
-void main_move(int map[MAP_SIZE][MAP_SIZE]) {
-	
+void main_move(char map[MAP_SIZE][MAP_SIZE]) {
+
 	if (!_kbhit()) return;
 
 	int input = _getch();
 
-	if (input == 27) {
+	if (input == 27) {	//esc:27
 		gamestate = STATE_PAUSE;
 		//MENU
 		return;
@@ -52,94 +52,68 @@ void main_move(int map[MAP_SIZE][MAP_SIZE]) {
 	int nextpy = py + dy;
 
 	if (nextpx >= 0 && nextpx < MAP_SIZE && nextpy >= 0 && nextpy < MAP_SIZE) {
-		if (map[nextpy][nextpx] != WALL) {
+		if (map[nextpy][nextpx] != '#') {
 
 			playwalksound();
 
 			map[py][px] = previoustile;
 			gotoxy(px, py);
 
-			if (previoustile == START)
-				printf("%s", SHAPE_START);
+			if (previoustile == '#')
+				printf("■"); // 벽을 밟았다면 '#' 복구
 			else
-				printf("%s", SHAPE_EMPTY);
+				printf("  ");
 
 			previoustile = map[nextpy][nextpx];
 
-			map[nextpy][nextpx];
 			gotoxy(nextpx, nextpy);
 			printf("%s", SHAPE_PLAYER);
 
 			px = nextpx;
 			py = nextpy;
-			
+
 		}
 	}
-} 
+}
 
 
 
 
-int main() //예시 main함수
+void mainmove() //예시 main함수
 {
+	system("mode con cols=80 lines=30");
 
 	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursorInfo;
 	GetConsoleCursorInfo(consoleHandle, &cursorInfo);
 	cursorInfo.bVisible = FALSE;
-	SetConsoleCursorInfo(consoleHandle, &cursorInfo); 
+	SetConsoleCursorInfo(consoleHandle, &cursorInfo);
 	system("cls"); //구글에서 커서 투명하게 하는 법<<이거 쳐서 복붙함
 
-    int testMap[MAP_SIZE][MAP_SIZE] = {
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-        {1,9,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-    };
+	system("cls");
+	mapmain();
 
-  
-    px = 1;
-    py = 1;
-    gamestate = 1;      
-    previoustile = 2; 
+	px = 1;
+	py = 1;
+	gamestate = 1;
+	previoustile = ' ';
 
- 
-    system("cls");
-    for (int i = 0; i < MAP_SIZE; i++) {
-        for (int j = 0; j < MAP_SIZE; j++) {
-            if (testMap[i][j] == 1) printf("##");
-            else if (testMap[i][j] == 9) printf("%s", SHAPE_PLAYER);
-            else printf("  ");
-        }
-        printf("\n");
-    }
+	gotoxy(px, py);
+	printf("%s", SHAPE_PLAYER);
 
- 
-    while (1) {
-        main_move(testMap);
+	while (1) {
+		main_move(map_data);
 
-       
-        if (gamestate == STATE_PAUSE) {
-            gotoxy(0, MAP_SIZE + 1);
-            printf("[PAUSE] 1을 누르면 복귀: ");
-            if (_getch() == '1') {
-                gamestate = 1;
-                gotoxy(0, MAP_SIZE + 1);
-                printf("                                       "); 
-            }
-        }
-        Sleep(10); 
-    }
-    return 0;
+
+		if (gamestate == STATE_PAUSE) {
+			gotoxy(0, MAP_SIZE + 1);
+			printf("[PAUSE] 1을 누르면 복귀: ");
+			if (_getch() == '1') {
+				gamestate = 1;
+				gotoxy(0, MAP_SIZE + 1);
+				printf("                                       ");
+			}
+		}
+		Sleep(10);
+	}
 }

@@ -1,9 +1,8 @@
 ﻿#include <stdio.h>
-#include <conio.h>   // _getch() 함수 
-#include <windows.h>
+#include <conio.h>   // _getch() 함수 사용
+#include<windows.h>
 
-
-//기호상수
+// 기호 상수 정의 (요구사항 반영)
 #define UP 72
 #define DOWN 80
 #define ENTER 13
@@ -16,7 +15,7 @@ int mainMenu();
 int selectDifficulty();
 void showInstructions();
 
-int main() {
+void settitle() {
 
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_CURSOR_INFO cursorInfo;
@@ -24,8 +23,6 @@ int main() {
     cursorInfo.bVisible = FALSE;
     SetConsoleCursorInfo(consoleHandle, &cursorInfo);
     system("cls"); //구글에서 커서 투명하게 하는 법<<이거 쳐서 복붙함
-
-
     int menuChoice;
     int difficulty = EASY; // 기본 난이도 초기화
 
@@ -34,9 +31,9 @@ int main() {
 
         if (menuChoice == 0) {
             difficulty = selectDifficulty(); // 난이도 선택 화면으로 이동
-            system("cls");
-            printf("\n난이도 %d\n", difficulty);
-            _getch();
+            //system("cls");
+            
+            return;
         }
         else if (menuChoice == 1) {
             showInstructions(); // 게임 설명 화면
@@ -47,7 +44,6 @@ int main() {
             break;
         }
     }
-    return 0;
 }
 
 // 메인타이틀
@@ -142,7 +138,7 @@ int selectDifficulty() {
             else if (key == DOWN) selected = (selected == 2) ? 0 : selected + 1;
         }
         else if (key == ENTER) {
-            return selected + 1; 
+            return selected + 1;
         }
     }
 }
