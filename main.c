@@ -4,6 +4,6 @@ int main(void) {
 	
 	settitle();
 	mapmain();
-	mainmove();
+	main_move();
 	
 }

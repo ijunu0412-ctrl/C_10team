@@ -20,4 +20,8 @@ extern int px;
 extern int py;
 extern int previoustile;
 
+void settitle();
+void mapmain();
+void main_move();
+
 #endif

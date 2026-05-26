@@ -74,19 +74,19 @@ void map()
 #include <windows.h>
 #include "game.h"
 
-char map_data[MAP_SIZE][MAP_SIZE] = { 0 }; [cite:1]
+char map_data[MAP_SIZE][MAP_SIZE] = { 0 }; 
 
 void map();
 void map_draw(); // 맵을 화면에 정렬해서 그리는 함수 추가
 
 void mapmain()
 {
-	map(); [cite:1]
+	map(); 
 }
 
 void map()
 {
-	char x1, y1; [cite:1]
+	char x1, y1; 
 		srand((unsigned)time(NULL));
 	int i, j;
 
@@ -94,11 +94,11 @@ void map()
 	for (i = 0; i < MAP_SIZE; i++)
 	{
 		for (j = 0; j < MAP_SIZE; j++)
-			map_data[i][j] = ' '; [cite:1]
+			map_data[i][j] = ' '; 
 	}
 
 	// 2. 목적지 배치
-	map_data[MAP_SIZE - 2][1] = 'b'; [cite:1]
+	map_data[MAP_SIZE - 2][1] = 'b'; 
 
 		// 3. 테두리 벽 정확하게 생성 ([세로][가로] 축 일치)
 		for (i = 0; i < MAP_SIZE; i++)
@@ -116,7 +116,7 @@ void map()
 		if (map_data[y1][x1] == 'a' || map_data[y1][x1] == 'b')
 			i--;
 		else
-			map_data[y1][x1] = 'a'; [cite:1]
+			map_data[y1][x1] = 'a'; 
 	}
 
 	// 최초 1회 화면에 맵 그리기
@@ -133,14 +133,14 @@ void map_draw() {
 	for (i = 0; i < MAP_SIZE; i++) {
 		for (j = 0; j < MAP_SIZE; j++) {
 			if (map_data[i][j] == 'a')
-				printf("▶"); [cite:1]
+				printf("▶"); 
 			else if (map_data[i][j] == 'b')
-				printf("◆"); [cite:1]
+				printf("◆"); 
 			else if (map_data[i][j] == '#')
 				printf("■"); // 2칸 크기 벽 통일
 			else
 				printf("  "); // 공백 2칸 통일
 		}
-		printf("\n"); [cite:1]
+		printf("\n"); 
 	}
 }

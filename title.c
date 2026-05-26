@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <conio.h>   // _getch() 함수 사용
 #include<windows.h>
+#include <stdlib.h>
 
 // 기호 상수 정의 (요구사항 반영)
 #define UP 72
@@ -41,7 +42,7 @@ void settitle() {
         else if (menuChoice == 2) {
             system("cls");
             printf("\n게임을 종료합니다.\n"); // 종료
-            break;
+            exit(0);
         }
     }
 }
