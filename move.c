@@ -1,13 +1,10 @@
-﻿#include <stdio.h>
-#include <conio.h>
-#include <windows.h>
-#include "game.h"
+﻿#include "game.h"
 
 
-int px, py, gamestate, previoustile, nextpx, nextpy;
+int px = 1, py = MAP_SIZE - 2, gamestate = 1, previoustile = 2, nextpx, nextpy;
 
 void gotoxy(int x, int y) {
-	COORD cur = { x * 2, y };
+	COORD cur = { x , y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cur);
 }
 
@@ -15,7 +12,7 @@ void playwalksound() {
 	Beep(500, 7);
 }
 
-void main_move(char map[MAP_SIZE][MAP_SIZE]) {
+void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 
 	if (!_kbhit()) return;
 
@@ -59,15 +56,15 @@ void main_move(char map[MAP_SIZE][MAP_SIZE]) {
 			map[py][px] = previoustile;
 			gotoxy(px, py);
 
-			if (previoustile == '#')
+			if (previoustile == '■')
 				printf("■"); // 벽을 밟았다면 '#' 복구
 			else
-				printf("  ");
+				printf(" ");
 
 			previoustile = map[nextpy][nextpx];
 
 			gotoxy(nextpx, nextpy);
-			printf("%s", SHAPE_PLAYER);
+			printf("\u25CF");
 
 			px = nextpx;
 			py = nextpy;

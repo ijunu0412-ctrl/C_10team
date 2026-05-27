@@ -1,20 +1,4 @@
-﻿#include <stdio.h>
-#include <conio.h>   // _getch() 함수 사용
-#include<windows.h>
-#include <stdlib.h>
-
-// 기호 상수 정의 (요구사항 반영)
-#define UP 72
-#define DOWN 80
-#define ENTER 13
-
-#define EASY 1
-#define NORMAL 2
-#define HARD 3
-
-int mainMenu();
-int selectDifficulty();
-void showInstructions();
+﻿#include "game.h"
 
 void settitle() {
 
@@ -32,7 +16,6 @@ void settitle() {
 
         if (menuChoice == 0) {
             difficulty = selectDifficulty(); // 난이도 선택 화면으로 이동
-            //system("cls");
             
             return;
         }

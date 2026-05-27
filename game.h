@@ -1,6 +1,5 @@
-#ifndef GAME_H
 #define GAME_H
-#define MAP_SIZE 15
+#define MAP_SIZE 20
 
 #define EMPTY 0
 #define WALL 1
@@ -15,13 +14,34 @@
 #define SHAPE_START "\u25C6"
 #define SHAPE_EMPTY "  "
 
+#define UP 72
+#define DOWN 80
+#define ENTER 13
+
+#define EASY 1
+#define NORMAL 2
+#define HARD 3
+
+
 extern int gamestate;
 extern int px;
 extern int py;
 extern int previoustile;
 
+extern short map_data[][MAP_SIZE];
+
 void settitle();
-void mapmain();
+void map();
 void main_move();
 
-#endif
+int mainMenu();
+int selectDifficulty();
+void showInstructions();
+
+void map_draw();
+
+#include <stdio.h>
+#include <conio.h>   
+#include<windows.h>
+#include <stdlib.h>
+#include<time.h>
