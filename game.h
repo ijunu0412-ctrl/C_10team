@@ -31,14 +31,16 @@ extern int previoustile;
 extern short map_data[][MAP_SIZE];
 
 void settitle();
-void map();
+void map(int* difficulty);
 void main_move();
 
 int mainMenu();
 int selectDifficulty();
 void showInstructions();
-
 void map_draw();
+void penalty_flag(int i);
+void good_flag(int i);
+void goal_flag();
 
 #include <stdio.h>
 #include <conio.h>   

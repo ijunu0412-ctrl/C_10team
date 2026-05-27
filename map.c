@@ -2,7 +2,7 @@
 
 short map_data[MAP_SIZE][MAP_SIZE] = { 0 };
 
-void map()
+void map(int* diff)
 {
 	char x1, y1; 
 		srand((unsigned)time(NULL));
@@ -15,24 +15,30 @@ void map()
 	}
 
 	map_data[MAP_SIZE - 2][1] = 'b'; 
-
-		for (i = 0; i < MAP_SIZE; i++)
-		{
-			map_data[0][i] = '#';            
-			map_data[i][0] = '#';            
-			map_data[MAP_SIZE - 1][i] = '#'; 
-			map_data[i][MAP_SIZE - 1] = '#'; 
-		}
-		
-
-	for (i = 0; i < 7; i++) {
-		y1 = rand() % (MAP_SIZE - 2) + 1;
-		x1 = rand() % (MAP_SIZE - 2) + 1;
-		if (map_data[y1][x1] == 'a' || map_data[y1][x1] == 'b')
-			i--;
-		else
-			map_data[y1][x1] = 'a'; 
+	goal_flag();  //골인깃발
+	for (i = 0; i < MAP_SIZE; i++)
+	{
+		map_data[0][i] = '#';            
+		map_data[i][0] = '#';            
+		map_data[MAP_SIZE - 1][i] = '#'; 
+		map_data[i][MAP_SIZE - 1] = '#'; 
 	}
+		
+	switch (*diff) {
+	case 1:
+		penalty_flag(*diff); //패널티깃발
+		good_flag(*diff);  // 보상깃발
+		break;
+	case 2:
+		penalty_flag(*diff);
+		good_flag(*diff);
+		break;
+	case 3:
+		penalty_flag(*diff);
+		good_flag(*diff);
+		break;
+	}
+	
 
 	map_draw();
 }
@@ -44,15 +50,42 @@ void map_draw() {
 	int i, j;
 	for (i = 0; i < MAP_SIZE; i++) {
 		for (j = 0; j < MAP_SIZE; j++) {
-			if (map_data[i][j] == 'a')
+			if (map_data[i][j] == 'a' || map_data[i][j] == 'c' || map_data[i][j] == 'g')
 				printf("▶"); 
 			else if (map_data[i][j] == 'b')
 				printf("\u25CF"); 
 			else if (map_data[i][j] == '#')
-				printf("■"); // 2칸 크기 벽 통일
+				printf("■"); 
 			else
 				printf(" "); 
 		}
 		printf("\n"); 
 	}
 }
+
+void penalty_flag(int i) {
+	int x1, y1, j = 0;
+	for (;j < i;j++) {
+		y1 = rand() % (MAP_SIZE - 2) + 1;
+		x1 = rand() % (MAP_SIZE - 2) + 1;
+		if (!(map_data[y1][x1] == 'a' || map_data[y1][x1] == 'b' || map_data[y1][x1] == 'c' || map_data[y1][x1] == 'g'))
+			map_data[y1][x1] = 'a';
+	}
+}
+
+void good_flag(int i) {
+	int x1, y1, j = 0;
+	for (;j < i;j++) {
+		y1 = rand() % (MAP_SIZE - 2) + 1;
+		x1 = rand() % (MAP_SIZE - 2) + 1;
+		if (!(map_data[y1][x1] == 'a' || map_data[y1][x1] == 'b' || map_data[y1][x1] == 'c' || map_data[y1][x1] == 'g'))
+			map_data[y1][x1] = 'c';
+	}
+}
+
+void goal_flag() {
+	int x1, y1;
+		y1 = rand() % (MAP_SIZE - 2) + 1;
+		x1 = rand() % (MAP_SIZE - 2) + 1;
+		map_data[y1][x1] = 'g';
+	}

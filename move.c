@@ -55,16 +55,28 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 
 			map[py][px] = previoustile;
 			gotoxy(px, py);
-
-			if (previoustile == '■')
-				printf("■"); // 벽을 밟았다면 '#' 복구
-			else
-				printf(" ");
+			printf(" ");
 
 			previoustile = map[nextpy][nextpx];
-
 			gotoxy(nextpx, nextpy);
 			printf("\u25CF");
+
+			switch (previoustile) {
+			case 'a':
+				gotoxy(0, MAP_SIZE + 1);
+				printf("패널티 깃발입니다.               ");
+				break;
+			case 'g':
+				gotoxy(0, MAP_SIZE + 1);
+				printf("골인~~~~~~~~~~~              ");
+				break;
+			case 'c':
+				gotoxy(0, MAP_SIZE + 1);
+				printf("보상 깃발입니다.            ");
+				break;
+			}
+
+
 
 			px = nextpx;
 			py = nextpy;
