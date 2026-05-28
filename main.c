@@ -3,7 +3,7 @@
 int main(void) {
     extern int* difficulty;
 	settitle();
-    map(difficulty);
+    map_main(difficulty);
    
     while (1) {
         main_move(map_data);

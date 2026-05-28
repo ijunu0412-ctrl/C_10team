@@ -1,7 +1,7 @@
 ﻿#include "game.h"
 
-
 int px = 1, py = MAP_SIZE - 2, gamestate = 1, previoustile = 2, nextpx, nextpy;
+extern int* difficulty;
 
 void gotoxy(int x, int y) {
 	COORD cur = { x , y };
@@ -13,7 +13,6 @@ void playwalksound() {
 }
 
 void main_move(short map[MAP_SIZE][MAP_SIZE]) {
-
 	if (!_kbhit()) return;
 
 	int input = _getch();
@@ -52,7 +51,7 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 		if (map[nextpy][nextpx] != '#') {
 
 			playwalksound();
-
+			previoustile = 0;
 			map[py][px] = previoustile;
 			gotoxy(px, py);
 			printf(" ");
@@ -67,9 +66,20 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 				printf("패널티 깃발입니다.               ");
 				break;
 			case 'g':
-				gotoxy(0, MAP_SIZE + 1);
-				printf("골인~~~~~~~~~~~              ");
-				break;
+				if (*difficulty != HARD){
+					gotoxy(0, MAP_SIZE + 1);
+					printf("골인~~~~~,3초후다음단계     ");
+					Sleep(3000);
+					(*difficulty)++;
+					map_main(difficulty);
+					break;
+				}
+				else{
+					gotoxy(0, MAP_SIZE + 1);
+					printf("HARD난이도를 클리어하셨습니다!");
+					(*difficulty)++;
+					break;
+				}
 			case 'c':
 				gotoxy(0, MAP_SIZE + 1);
 				printf("보상 깃발입니다.            ");
@@ -77,14 +87,19 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 			}
 
 
-
-			px = nextpx;
-			py = nextpy;
+			if (previoustile == 'g' && *difficulty !=4)
+			{
+				px = 1;
+				py = MAP_SIZE - 2;
+			}
+			else {
+				px = nextpx;
+				py = nextpy;
+			}
 
 		}
 	}
 }
-
 
 
 

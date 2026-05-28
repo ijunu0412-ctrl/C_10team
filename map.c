@@ -2,7 +2,7 @@
 
 short map_data[MAP_SIZE][MAP_SIZE] = { 0 };
 
-void map(int* diff)
+void map_main(int* diff)
 {
 	char x1, y1; 
 		srand((unsigned)time(NULL));
@@ -25,15 +25,15 @@ void map(int* diff)
 	}
 		
 	switch (*diff) {
-	case 1:
+	case EASY:
 		penalty_flag(*diff); //패널티깃발
 		good_flag(*diff);  // 보상깃발
 		break;
-	case 2:
+	case NORMAL:
 		penalty_flag(*diff);
 		good_flag(*diff);
 		break;
-	case 3:
+	case HARD:
 		penalty_flag(*diff);
 		good_flag(*diff);
 		break;

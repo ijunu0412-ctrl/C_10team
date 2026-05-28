@@ -31,7 +31,7 @@ extern int previoustile;
 extern short map_data[][MAP_SIZE];
 
 void settitle();
-void map(int* difficulty);
+void map_main(int* difficulty);
 void main_move();
 
 int mainMenu();
@@ -41,6 +41,7 @@ void map_draw();
 void penalty_flag(int i);
 void good_flag(int i);
 void goal_flag();
+void gotoxy(int x, int y);
 
 #include <stdio.h>
 #include <conio.h>   
