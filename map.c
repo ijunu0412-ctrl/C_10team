@@ -4,6 +4,7 @@ short map_data[MAP_SIZE][MAP_SIZE] = { 0 };
 
 void map_main(int* diff)
 {
+	
 	char x1, y1; 
 		srand((unsigned)time(NULL));
 	int i, j;

@@ -70,6 +70,7 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 					gotoxy(0, MAP_SIZE + 1);
 					printf("골인~~~~~,3초후다음단계     ");
 					Sleep(3000);
+					FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));//입력버퍼 삭제(복붙)
 					(*difficulty)++;
 					map_main(difficulty);
 					break;
