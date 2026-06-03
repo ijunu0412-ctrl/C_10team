@@ -1,5 +1,7 @@
 ﻿#include "game.h"
 
+void auto_diff(int previoustile);
+
 int px = 1, py = MAP_SIZE - 2, gamestate = 1, previoustile = 2, nextpx, nextpy;
 extern int* difficulty;
 
@@ -60,32 +62,7 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 			gotoxy(nextpx, nextpy);
 			printf("\u25CF");
 
-			switch (previoustile) {
-			case 'a':
-				gotoxy(0, MAP_SIZE + 1);
-				printf("패널티 깃발입니다.               ");
-				break;
-			case 'g':
-				if (*difficulty != HARD){
-					gotoxy(0, MAP_SIZE + 1);
-					printf("골인~~~~~,3초후다음단계     ");
-					Sleep(3000);
-					FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));//입력버퍼 삭제(복붙)
-					(*difficulty)++;
-					map_main(difficulty);
-					break;
-				}
-				else{
-					gotoxy(0, MAP_SIZE + 1);
-					printf("HARD난이도를 클리어하셨습니다!");
-					(*difficulty)++;
-					break;
-				}
-			case 'c':
-				gotoxy(0, MAP_SIZE + 1);
-				printf("보상 깃발입니다.            ");
-				break;
-			}
+			auto_diff(previoustile);
 
 
 			if (previoustile == 'g' && *difficulty !=4)
@@ -104,3 +81,38 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 
 
 
+void auto_diff(int previoustile) // 밑에 따로 함수로 뺐습니다.
+{
+	switch (previoustile) {
+	case 'a':
+		window_draw(main_window());
+		gotoxy(1, MAP_SIZE + 1);
+		printf("패널티 깃발입니다.");
+		break;
+	case 'g':
+		if (*difficulty != HARD) {
+			window_draw(main_window());
+			gotoxy(1, MAP_SIZE + 1);
+			printf("골인~~~~~,3초후다음단계");
+			Sleep(3000);
+			FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));//입력버퍼 삭제(복붙)
+			(*difficulty)++;
+			map_main(difficulty);
+			break;
+		}
+		else {
+			window_draw(main_window());
+			gotoxy(1, MAP_SIZE + 1);
+			printf("HARD난이도를 클리어하셨습니다!");
+			(*difficulty)++;
+			break;
+		}
+	case 'c':
+		window_draw(main_window());
+		gotoxy(1, MAP_SIZE + 1);
+		printf("보상 깃발입니다.");
+		break;
+	}
+
+	return 0;
+}
