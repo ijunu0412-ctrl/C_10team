@@ -1,4 +1,5 @@
-﻿#include "game.h"
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include "game.h"
 
 short* main_window();
 void window_draw(short flag_window[window_row][window_col]);
@@ -48,6 +49,11 @@ void map_main(int* diff)
 	window_draw(main_window());
 
 }
+
+void setColor(unsigned short color) {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}//색 입히기
+
 void map_draw() {
 	system("cls");
 	COORD baseCur = { 0, 0 };
@@ -56,14 +62,32 @@ void map_draw() {
 	int i, j;
 	for (i = 0; i < MAP_SIZE; i++) {
 		for (j = 0; j < MAP_SIZE; j++) {
-			if (map_data[i][j] == 'a' || map_data[i][j] == 'c' || map_data[i][j] == 'g')
-				printf("▶"); 
+			if (map_data[i][j] == 'a')
+			{
+				setColor(4);
+				printf("▶");
+			}
+			else if (map_data[i][j] == 'c')
+			{
+				setColor(2);
+				printf("▶");
+			}
+			else if (map_data[i][j] == 'g')
+			{
+				setColor(1);
+				printf("▶");
+			}
 			else if (map_data[i][j] == 'b')
-				printf("\u25CF"); 
+			{
+				printf("\u25CF");
+			}
 			else if (map_data[i][j] == '#')
-				printf("■"); 
+			{
+				printf("■");
+			}
 			else
-				printf(" "); 
+				printf(" ");
+			setColor(7);
 		}
 		printf("\n"); 
 	}

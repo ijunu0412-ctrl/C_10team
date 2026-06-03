@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <conio.h>   
+#include<windows.h>
+#include <stdlib.h>
+#include<time.h>
+
 #define GAME_H
 #define MAP_SIZE 20
 
@@ -23,7 +29,7 @@
 #define HARD 3
 
 #define window_row  6 // 보상, 패널티, 골인 창의 행열
-#define window_col  50 // 
+#define window_col  50 
 
 
 extern int gamestate;
@@ -49,8 +55,4 @@ void gotoxy(int x, int y);
 short* main_window(); // 창 생성
 void window_draw(short flag_window[window_row][window_col]); // 창 그리기
 
-#include <stdio.h>
-#include <conio.h>   
-#include<windows.h>
-#include <stdlib.h>
-#include<time.h>
+void setColor(unsigned short color);
