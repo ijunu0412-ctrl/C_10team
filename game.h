@@ -26,7 +26,7 @@
 
 #define EASY 1
 #define NORMAL 2
-#define HARD 3
+#define HARD 3d
 
 #define window_row  6 // 보상, 패널티, 골인 창의 행열
 #define window_col  50 
@@ -36,6 +36,8 @@ extern int gamestate;
 extern int px;
 extern int py;
 extern int previoustile;
+
+extern int counter1;
 
 extern short map_data[][MAP_SIZE];
 
@@ -51,6 +53,7 @@ void penalty_flag(int i);
 void good_flag(int i);
 void goal_flag();
 void gotoxy(int x, int y);
+void counter(int* diff);
 
 short* main_window(); // 창 생성
 void window_draw(short flag_window[window_row][window_col]); // 창 그리기

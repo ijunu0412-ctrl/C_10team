@@ -19,11 +19,13 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 
 	int input = _getch();
 
+
 	if (input == 27) {	//esc:27
 		gamestate = STATE_PAUSE;
 		//MENU
 		return;
 	}
+
 
 	if (gamestate == STATE_PAUSE) {
 		return;
@@ -32,16 +34,24 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 	int dx = 0, dy = 0;
 	switch (input) {
 	case 'w':
-	case 'W': dy = -1; break;
+	case 'W': dy = -1; 
+	counter1++;
+	break;
 
 	case 'a':
-	case 'A': dx = -1; break;
+	case 'A': dx = -1;
+	counter1++;
+	break;
 
 	case 's':
-	case 'S': dy = 1; break;
+	case 'S': dy = 1;
+	counter1++;
+	break;
 
 	case 'd':
-	case 'D': dx = 1; break;
+	case 'D': dx = 1;
+	counter1++;
+	break;
 
 	default: return;
 	}
@@ -65,7 +75,7 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 			auto_diff(previoustile);
 
 
-			if (previoustile == 'g' && *difficulty !=4)
+			if (previoustile == 'g' && *difficulty != 4)
 			{
 				px = 1;
 				py = MAP_SIZE - 2;
@@ -76,6 +86,8 @@ void main_move(short map[MAP_SIZE][MAP_SIZE]) {
 			}
 
 		}
+		else
+			counter1--;
 	}
 }
 
@@ -91,6 +103,7 @@ void auto_diff(int previoustile) // 밑에 따로 함수로 뺐습니다.
 		break;
 	case 'g':
 		if (*difficulty != HARD) {
+			counter1 = 0; // 카운터초기화
 			window_draw(main_window());
 			gotoxy(1, MAP_SIZE + 1);
 			printf("골인~~~~~,3초후다음단계");
@@ -102,6 +115,7 @@ void auto_diff(int previoustile) // 밑에 따로 함수로 뺐습니다.
 		}
 		else {
 			window_draw(main_window());
+			counter1 = 0;
 			gotoxy(1, MAP_SIZE + 1);
 			printf("HARD난이도를 클리어하셨습니다!");
 			(*difficulty)++;

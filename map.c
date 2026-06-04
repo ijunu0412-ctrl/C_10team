@@ -1,6 +1,8 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include "game.h"
 
+int counter1;
+
 short* main_window();
 void window_draw(short flag_window[window_row][window_col]);
 
@@ -165,4 +167,31 @@ void window_draw(short flag_window[window_row][window_col]) // 창 구현
 			printf("%c", flag_window[j][i]);
 		printf("\n");
 	}
+}
+
+void counter(int* diff)
+{
+	switch (*diff)
+	{
+	case EASY:
+		gotoxy(MAP_SIZE,0);
+		printf("난이도:EASY");
+		gotoxy(MAP_SIZE,1);
+		printf("이동횟수: %d", counter1);
+		break;
+	case NORMAL:
+		gotoxy(MAP_SIZE, 0);
+		printf("난이도:NORMAL");
+		gotoxy(MAP_SIZE, 1);
+		printf("이동횟수: %d", counter1);
+		break;
+	case HARD:
+		gotoxy(MAP_SIZE, 0);
+		printf("난이도:HARD");
+		gotoxy(MAP_SIZE, 1);
+		printf("이동횟수: %d", counter1);
+		break;
+
+	}
+	return 0;
 }
