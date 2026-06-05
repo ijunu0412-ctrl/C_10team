@@ -1,61 +1,71 @@
-#include <stdio.h>
-#include <conio.h>   
-#include<windows.h>
-#include <stdlib.h>
-#include<time.h>
-
+﻿#ifndef GAME_H
 #define GAME_H
+
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+#include <windows.h>
+#include <stdlib.h>
+#include <time.h>
+
 #define MAP_SIZE 20
 
-#define EMPTY 0
-#define WALL 1
-#define START 2
-#define FLAG 3
+#define EMPTY  0
+#define WALL   1
+#define START  2
+#define FLAG   3
 #define PLAYER 99
 
-#define STATE_PLAY 1
+#define STATE_PLAY  1
 #define STATE_PAUSE 2
 
-#define SHAPE_PLAYER "\u25CF"
-#define SHAPE_START "\u25C6"
-#define SHAPE_EMPTY "  "
-
-#define UP 72
-#define DOWN 80
+#define UP    72
+#define DOWN  80
+#define LEFT  75
+#define RIGHT 77
 #define ENTER 13
 
-#define EASY 1
+#define EASY   1
 #define NORMAL 2
-#define HARD 3d
+#define HARD   3
 
-#define window_row  6 // 보상, 패널티, 골인 창의 행열
-#define window_col  50 
+#define window_row  7
+#define window_col  80
 
+/* ── 전역 변수 외부 참조 ─────────────────── */
+extern int   gamestate;
+extern int   px;
+extern int   py;
+extern int   previoustile;
+extern int   game_difficulty;
+extern int*  difficulty;
 
-extern int gamestate;
-extern int px;
-extern int py;
-extern int previoustile;
+extern short map_data[MAP_SIZE][MAP_SIZE];
 
-extern int counter1;
+extern DWORD msg_start_time;
+extern int   msg_active;
 
-extern short map_data[][MAP_SIZE];
+extern char  flag_window[window_row][window_col];
 
+/* ── 함수 선언 ───────────────────────────── */
 void settitle();
 void map_main(int* difficulty);
 void main_move();
+void play_transition();
 
-int mainMenu();
-int selectDifficulty();
+int  mainMenu();
+int  selectDifficulty();
 void showInstructions();
+
 void map_draw();
-void penalty_flag(int i);
-void good_flag(int i);
+void draw_tile(int tile);       /* 색상 포함 타일 1칸 출력 */
+void penalty_flag(int diff);
+void good_flag(int diff);
 void goal_flag();
+
 void gotoxy(int x, int y);
-void counter(int* diff);
+void main_window();
+void window_draw();
+void update_message_timer();
 
-short* main_window(); // 창 생성
-void window_draw(short flag_window[window_row][window_col]); // 창 그리기
-
-void setColor(unsigned short color);
+#endif

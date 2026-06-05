@@ -1,6 +1,6 @@
 ﻿#include "game.h"
 
-// 전역 변수 분리
+
 int menu_selected = 0;       // 메인 메뉴의 커서 위치 (0: 시작, 1: 방법, 2: 종료)
 int game_difficulty = 1;     // 실제 선택된 게임 난이도 (1: 쉬움, 2: 보통, 3: 어려움)
 int* difficulty = &game_difficulty; // main.c에서 참조할 포인터
@@ -14,18 +14,18 @@ void settitle() {
     system("cls");
 
     int menuChoice;
-    
+
 
     while (1) {
-        menuChoice = mainMenu(); 
+        menuChoice = mainMenu();
 
         if (menuChoice == 0) {
-            //selectDifficulty()의 반환값(1, 2, 3)을 실제 난이도 변수에 저장
+            
             game_difficulty = selectDifficulty();
-            return; 
+            return;
         }
         else if (menuChoice == 1) {
-            showInstructions(); // 게임 설명 화면
+            showInstructions(); 
         }
         else if (menuChoice == 2) {
             system("cls");
@@ -35,7 +35,7 @@ void settitle() {
     }
 }
 
-// 메인타이틀
+
 int mainMenu() {
     int key;
     const char* menuDisplay[] = {
@@ -55,7 +55,7 @@ int mainMenu() {
 
         for (int i = 0; i < totalLines; i++) {
             if (i >= 4) {
-                int menuIndex = i - 4;
+                int menuIndex = i-4;
 
                 if (menu_selected == menuIndex) {
                     printf(" >%s\n", menuDisplay[i]);
@@ -80,12 +80,12 @@ int mainMenu() {
             }
         }
         else if (key == ENTER) {
-            return menu_selected; // 선택된 메뉴 인덱스 반환
+            return menu_selected; 
         }
     }
 }
 
-// 난이도 선택
+
 int selectDifficulty() {
     int key;
     int selected = 0;
