@@ -151,7 +151,7 @@ void auto_diff(int tile)
             gotoxy(2, MAP_SIZE + 2);
             printf("　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　");
             gotoxy(2, MAP_SIZE + 2);
-            printf("설계자: 골인인가... 다음 단계로 보내주지.");
+            printf("과제 제출에 성공하였습니다!");
             play_transition();          /* ← 내부에서 3000ms 소요 */
             (*difficulty)++;
             FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
@@ -165,8 +165,8 @@ void auto_diff(int tile)
 
             printf("\n");
             printf("  =====================================\n");
-            printf("         HARD 난이도 클리어!           \n");
-            printf("  설계자: 대단하군... 진정한 승자로다.  \n");
+            printf("          모든 과제 제출 성공!          \n");
+            printf("        성공적으로 졸업했습니다!        \n");
             printf("  =====================================\n");
             printf("\n");
             printf("  계속하시겠습니까?\n");

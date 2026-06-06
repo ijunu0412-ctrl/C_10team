@@ -20,8 +20,8 @@ void draw_tile(int tile) {
     case '#': printf("\033[37m■\033[0m ");  break;
     case 'b': printf("● ");                 break;
     case 'S': printf("\033[97m◆\033[0m ");  break;
-    case 'a': printf("\033[31m▶\033[0m ");  break;
-    case 'c': printf("\033[34m▶\033[0m ");  break;
+    case 'a': printf("\033[35m▶\033[0m ");  break;
+    case 'c': printf("\033[35m▶\033[0m ");  break;
     case 'g': printf("\033[33m▶\033[0m ");  break;
     default:  printf("  ");                  break;
     }
@@ -138,8 +138,7 @@ void window_draw()
         }
         else if (j == 1) {
             /* 범례 행: ANSI 색상 포함 직접 출력 */
-            printf(" \033[31m▶\033[0m:패널티  "
-                   "\033[34m▶\033[0m:보상  "
+            printf(" \033[35m▶\033[0m:보상/패널티  "
                    "\033[33m▶\033[0m:골  "
                    "\033[97m◆\033[0m:시작");
             /* 나머지 공백 채우기 */
