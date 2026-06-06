@@ -20,12 +20,12 @@ void settitle() {
         menuChoice = mainMenu();
 
         if (menuChoice == 0) {
-            
+
             game_difficulty = selectDifficulty();
             return;
         }
         else if (menuChoice == 1) {
-            showInstructions(); 
+            showInstructions();
         }
         else if (menuChoice == 2) {
             system("cls");
@@ -40,7 +40,8 @@ int mainMenu() {
     int key;
     const char* menuDisplay[] = {
         "=====================================",
-        "        C PROGRAMMING PROJECT        ",
+		"									  ",
+        "        대학생 과제 시뮬레이터       ",
         "                                     ",
         "=====================================",
         "  1. 게임 시작 ",
@@ -55,7 +56,7 @@ int mainMenu() {
 
         for (int i = 0; i < totalLines; i++) {
             if (i >= 4) {
-                int menuIndex = i-4;
+                int menuIndex = i - 4;
 
                 if (menu_selected == menuIndex) {
                     printf(" >%s\n", menuDisplay[i]);
@@ -72,19 +73,21 @@ int mainMenu() {
         key = _getch();
         if (key == 0 || key == 224) {
             key = _getch();
-            if (key == UP || key == 'w' || key == 'W') {
+            if (key == UP) {
                 menu_selected = (menu_selected == 0) ? 2 : menu_selected - 1;
             }
-            else if (key == DOWN || key == 's' || key == 'S') {
+            else if (key == DOWN) {
                 menu_selected = (menu_selected == 2) ? 0 : menu_selected + 1;
             }
         }
-        else if (key == 'w' || key == 'W')
-            menu_selected = (menu_selected == 0) ? 2 : menu_selected - 1;
-        else if (key == 's' || key == 'S')
-            menu_selected = (menu_selected == 2) ? 0 : menu_selected + 1;
+		else if (key == 'w' || key == 'W') {
+			menu_selected = (menu_selected == 0) ? 2 : menu_selected - 1;
+		}
+		else if (key == 's' || key == 'S') {
+			menu_selected = (menu_selected == 2) ? 0 : menu_selected + 1;
+		}
         else if (key == ENTER) {
-            return menu_selected; 
+            return menu_selected;
         }
     }
 }
@@ -96,11 +99,11 @@ int selectDifficulty() {
 
     const char* diffDisplay[] = {
         "=====================================",
-        "          SELECT DIFFICULTY          ",
+        "       수강할 과목을 선택하세요      ",
         "=====================================",
-        "  [1] (Easy)",
-        "  [2] (Normal)",
-        "  [3] (Hard)"
+        "  [1] Easy: 꿀교양",
+        "  [2] Normal: 전공 기초",
+        "  [3] Hard: 전공 심화"
     };
     int totalLines = sizeof(diffDisplay) / sizeof(diffDisplay[0]);
 
@@ -129,10 +132,12 @@ int selectDifficulty() {
             if (key == UP) selected = (selected == 0) ? 2 : selected - 1;
             else if (key == DOWN) selected = (selected == 2) ? 0 : selected + 1;
         }
-        else if (key == 'w' || key == 'W')
+        else if (key == 'w' || key == 'W') {
             selected = (selected == 0) ? 2 : selected - 1;
-        else if (key == 's' || key == 'S')
+        }
+        else if (key == 's' || key == 'S') {
             selected = (selected == 2) ? 0 : selected + 1;
+        }
         else if (key == ENTER) {
             return selected + 1;
         }
@@ -146,7 +151,11 @@ void showInstructions() {
         "\n=====================================",
         "            HOW TO PLAY              ",
         "=====================================",
-        "                                     ",
+        "1.조작키:화살표                     ",
+        "2.푸른 깃발은 마감일을 늘려주고, 후속 강의 수강권 조각이 제공됩니다.",
+        "3.붉은 깃발은 마감일을 차감하고, 후속 강의 수강권 조각을 없앱니다.",
+        "4.노란 깃발은 과제 제출입니다. 모든 수업의 과제를 제출하는 것이 목표입니다.",
+        "5.행운을 빌어요!",                          
         "=====================================",
         " 아무 키나 누르면 메인 메뉴로 돌아갑니다."
     };

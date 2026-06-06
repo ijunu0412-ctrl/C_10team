@@ -1,4 +1,4 @@
-#include "game.h"
+﻿#include "game.h"
 
 char  flag_window[window_row][window_col];   /* 테두리용으로만 유지 */
 short map_data[MAP_SIZE][MAP_SIZE] = { 0 };
@@ -22,8 +22,8 @@ void draw_tile(int tile) {
     case '#': printf("\033[37m■\033[0m ");  break;
     case 'b': printf("● ");                 break;
     case 'S': printf("\033[97m◆\033[0m ");  break;
-    case 'a': printf("\033[31m▶\033[0m ");  break;
-    case 'c': printf("\033[34m▶\033[0m ");  break;
+    case 'a': printf("\033[35m▶\033[0m ");  break;
+    case 'c': printf("\033[35m▶\033[0m ");  break;
     case 'g': printf("\033[33m▶\033[0m ");  break;
     default:  printf("  ");                  break;
     }
@@ -140,8 +140,7 @@ void window_draw()
         }
         else if (j == 1) {
             /* 범례 행: ANSI 색상 포함 직접 출력 */
-            printf(" \033[31m▶\033[0m:패널티  "
-                "\033[34m▶\033[0m:보상  "
+            printf(" \033[35m▶\033[0m:보상/패널티  "
                 "\033[33m▶\033[0m:골  "
                 "\033[97m◆\033[0m:시작");
             /* 나머지 공백 채우기 */
@@ -209,7 +208,7 @@ void counter(int* diff)
         }
         if (sel == 0) {
             FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-            counter1 = 4;
+            counter_level(difficulty);
             map_main(difficulty);
         }
         else {
@@ -236,11 +235,10 @@ void counter(int* diff)
     return 0;
 }
 
-
 void counter_level(int* diff) {
     switch (*diff) {
-    case EASY:counter1 = 50; break;
-    case NORMAL:counter1 = 40; break;
-    case HARD:counter1 = 30; break;
+    case (EASY):counter1 = 50; break;
+    case (NORMAL):counter1 = 40; break;
+    case (HARD):counter1 = 30; break;
     }
 }

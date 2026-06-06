@@ -8,7 +8,7 @@ int previoustile = 0;
 int flagcounter = 0;
 
 DWORD msg_start_time = 0;
-int   msg_active     = 0;
+int   msg_active = 0;
 
 /* 시작 지점 좌표 (맵 리셋 시에도 항상 고정) */
 #define START_X 1
@@ -51,10 +51,10 @@ void main_move() {
     if (input == 0 || input == 224) {
         input = _getch();
         switch (input) {
-        case UP:    dy = -1; break;
-        case DOWN:  dy =  1; break;
-        case LEFT:  dx = -1; break;
-        case RIGHT: dx =  1; break;
+        case UP:    dy = -1; counter1--; break;
+        case DOWN:  dy = 1; counter1--; break;
+        case LEFT:  dx = -1; counter1--; break;
+        case RIGHT: dx = 1; counter1--; break;
         default: return;
         }
     }
@@ -64,10 +64,10 @@ void main_move() {
     }
     else {
         switch (input) {
-        case 'w': case 'W': dy = -1; break;
-        case 's': case 'S': dy =  1; break;
-        case 'a': case 'A': dx = -1; break;
-        case 'd': case 'D': dx =  1; break;
+        case 'w': case 'W': dy = -1; counter1--; break;
+        case 's': case 'S': dy = 1; counter1--; break;
+        case 'a': case 'A': dx = -1; counter1--; break;
+        case 'd': case 'D': dx = 1; counter1-- ; break;
         default: return;
         }
     }
@@ -76,7 +76,10 @@ void main_move() {
     int nextpy = py + dy;
 
     if (nextpx < 0 || nextpx >= MAP_SIZE || nextpy < 0 || nextpy >= MAP_SIZE) return;
-    if (map_data[nextpy][nextpx] == '#') return;
+    if (map_data[nextpy][nextpx] == '#') {
+        counter1++;
+  return;
+    }
 
     playwalksound();
 
@@ -133,28 +136,37 @@ static void return_to_start() {
 void auto_diff(int tile)
 {
     const char* penalty_ment[] = {
-        "급한 약속이 생겨 과제를 하지 못했다...",
-        "교수님이 과제 마감일을 앞당기셨다...",
-        "원래 과제는 하루전에 하는거지!",
-        "너무 피곤하니 오늘은 그냥 자야겠다..."
+    "급한 약속이 생겨 과제를 하지 못했다...",
+    "교수님이 과제 마감일을 앞당기셨다...",
+    "원래 과제는 하루전에 하는거지!",
+    "너무 피곤하니 오늘은 그냥 자야겠다..."
     };
-    int rand_idx = rand() % 4;
 
+    int rand_idx = rand() % 4;
     switch (tile) {
-    case 'a':   /* 패널티 깃발 → 시작 위치로 복귀 */
-        SHOW_MSG(penalty_ment[rand_idx]);
-        return_to_start();
-        break;
+    case 'a':   /* 패널티 깃발 → totalflag 1감소 혹은 counter1 5감소 */
+        
+        if (rand() % 2 == 0) {
+            SHOW_MSG(penalty_ment[rand_idx]);
+            SHOW_MSG("\n5일이 지나갔다...");
+            counter1 -= 5;
+        }
+        else {
+            SHOW_MSG("교수: xxxxxxxxxx");
+            flagcounter -= 1;
+        } 
+        break; 
 
     case 'g':   /* 골 깃발 */
         if (*difficulty <= HARD) {
-            /* transition이 ~3000ms 동안 실행되면서 메시지도 같이 표시 */
+            
             gotoxy(2, MAP_SIZE + 2);
-            printf("　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　");
+            printf("                                  ");
             gotoxy(2, MAP_SIZE + 2);
-            printf("과제를 제출하였습니다!");
-            play_transition();          /* ← 내부에서 3000ms 소요 */
+            printf("설계자: 골인인가... 다음 단계로 보내주지.");
+            play_transition();
             (*difficulty)++;
+            counter_level(difficulty);
             FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
             map_main(difficulty);
         }
@@ -183,12 +195,11 @@ void auto_diff(int tile)
             int sel = 0;   /* 0: Hard 재도전, 1: 게임 종료 */
             const char* opts[] = { "Hard 난이도 재도전", "게임 종료" };
 
-            /* 선택지가 그려질 행: \n 개수로 결정
-               \n(1) + 헤더4줄 + \n(1) + 계속하시겠습니까\n(1) + \n(1) = 8행 */
+                
             const int MENU_ROW = 8;
 
             while (1) {
-                /* ★ 항상 같은 위치에서 덮어쓰기 */
+                /* 항상 같은 위치에서 덮어쓰기 */
                 gotoxy(0, MENU_ROW);
                 for (int k = 0; k < 2; k++) {
                     printf(sel == k ? " > %-25s\n" : "   %-25s\n", opts[k]);
@@ -219,12 +230,18 @@ void auto_diff(int tile)
         }
         break;
 
-    case 'c':   /* 보상 깃발 → 난이도 한 단계 하향 */
-        SHOW_MSG("교수님이 과제 제출일을 늘려주셨다!!");
-        (flagcounter)++;
-        break;
+    case 'c':   /* 보상 깃발 → totalflag 1증가 혹은 counter1 5증가 */
+        if (rand() % 2 == 0) {
+            SHOW_MSG("교수님이 제출 기한을 늘려주셨다!");
+            counter1 += 5;
+        }
+        else {
+            SHOW_MSG("교수: xxxxxxxxxx");
+            flagcounter += 1;
+        }
+        break; 
     }
-}
+} 
 
 #undef SHOW_MSG
 
@@ -232,7 +249,7 @@ void auto_diff(int tile)
 void update_message_timer() {
     if (msg_active && (GetTickCount() - msg_start_time >= 1000)) {
         gotoxy(2, MAP_SIZE + 2);
-        printf("　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　");
+        printf("                              ");
         msg_active = 0;
     }
 }

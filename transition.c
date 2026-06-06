@@ -19,7 +19,7 @@ void play_transition() {
         Sleep(30);
     }
 
-    Sleep(420);   
+    Sleep(420);
 
     /* ── 2단계: 맵 복원  ── */
     for (int sum = 0; sum <= max_sum; sum++) {
@@ -41,7 +41,7 @@ void play_transition() {
         Sleep(35);
     }
 
-    Sleep(300); 
+    Sleep(300);
 
     window_draw();
 }

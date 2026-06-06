@@ -38,7 +38,9 @@ extern int   px;
 extern int   py;
 extern int   previoustile;
 extern int   game_difficulty;
-extern int*  difficulty;
+extern int* difficulty;
+int counter1;
+int flagcounter;
 
 extern short map_data[MAP_SIZE][MAP_SIZE];
 
@@ -56,6 +58,9 @@ void play_transition();
 int  mainMenu();
 int  selectDifficulty();
 void showInstructions();
+void counter_level(int* diff);
+
+
 
 void map_draw();
 void draw_tile(int tile);       /* 색상 포함 타일 1칸 출력 */
