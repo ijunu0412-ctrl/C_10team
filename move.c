@@ -5,7 +5,7 @@ void auto_diff(int previoustile);
 int px = 1, py = MAP_SIZE - 2;
 int gamestate = STATE_PLAY;
 int previoustile = 0;
-int flagcounter = 0;
+
 
 DWORD msg_start_time = 0;
 int   msg_active = 0;
@@ -137,34 +137,38 @@ void auto_diff(int tile)
 {
     const char* penalty_ment[] = {
     "급한 약속이 생겨 과제를 하지 못했다...",
-    "교수님이 과제 마감일을 앞당기셨다...",
     "원래 과제는 하루전에 하는거지!",
     "너무 피곤하니 오늘은 그냥 자야겠다..."
     };
 
-    int rand_idx = rand() % 4;
+    int rand_idx = rand() % 3;
     switch (tile) {
     case 'a':   /* 패널티 깃발 → totalflag 1감소 혹은 counter1 5감소 */
-        
-        if (rand() % 2 == 0) {
             SHOW_MSG(penalty_ment[rand_idx]);
-            SHOW_MSG("\n 5일이 지나갔다...");
+            SHOW_MSG("\n5일이 지나갔다...");
             counter1 -= 5;
-        }
-        else {
-            SHOW_MSG("교수: xxxxxxxxxx");
-            flagcounter -= 1;
-        } 
-        break; 
+            break; 
 
     case 'g':   /* 골 깃발 */
         if (*difficulty <= HARD) {
-            
+            /* ★ 학점조각 5 미만이면 다음 단계 진입 불가 → 같은 난이도 재시작 */
+            if (flagcounter < 5) {
+                gotoxy(2, MAP_SIZE + 2);
+                printf("                                                  ");
+                gotoxy(2, MAP_SIZE + 2);
+                printf("학점조각이 부족해! (%d/5) 같은 난이도를 반복한다...", flagcounter);
+                Sleep(2000);
+                counter_level(difficulty);   /* 이동횟수만 초기화, 난이도 유지 */
+                FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+                map_main(difficulty);
+                break;
+            }
             gotoxy(2, MAP_SIZE + 2);
             printf("                                  ");
             gotoxy(2, MAP_SIZE + 2);
             printf("설계자: 골인인가... 다음 단계로 보내주지.");
             play_transition();
+            flagcounter = 0;   /* ★ 다음 단계 진입 시 학점조각 초기화 */
             (*difficulty)++;
             counter_level(difficulty);
             FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
@@ -231,14 +235,11 @@ void auto_diff(int tile)
         break;
 
     case 'c':   /* 보상 깃발 → totalflag 1증가 혹은 counter1 5증가 */
-        if (rand() % 2 == 0) {
-            SHOW_MSG("교수님이 제출 기한을 늘려주셨다!");
-            counter1 += 5;
-        }
-        else {
-            SHOW_MSG("교수: xxxxxxxxxx");
-            flagcounter += 1;
-        }
+        
+        SHOW_MSG("교수님이 제출 기한을 늘려주셨다!");
+        counter1 += 5;
+        SHOW_MSG("학점 1점을 얻었다!");
+        flagcounter += 1;
         break; 
     }
 } 
