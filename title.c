@@ -72,13 +72,17 @@ int mainMenu() {
         key = _getch();
         if (key == 0 || key == 224) {
             key = _getch();
-            if (key == UP) {
+            if (key == UP || key == 'w' || key == 'W') {
                 menu_selected = (menu_selected == 0) ? 2 : menu_selected - 1;
             }
-            else if (key == DOWN) {
+            else if (key == DOWN || key == 's' || key == 'S') {
                 menu_selected = (menu_selected == 2) ? 0 : menu_selected + 1;
             }
         }
+        else if (key == 'w' || key == 'W')
+            menu_selected = (menu_selected == 0) ? 2 : menu_selected - 1;
+        else if (key == 's' || key == 'S')
+            menu_selected = (menu_selected == 2) ? 0 : menu_selected + 1;
         else if (key == ENTER) {
             return menu_selected; 
         }
@@ -125,6 +129,10 @@ int selectDifficulty() {
             if (key == UP) selected = (selected == 0) ? 2 : selected - 1;
             else if (key == DOWN) selected = (selected == 2) ? 0 : selected + 1;
         }
+        else if (key == 'w' || key == 'W')
+            selected = (selected == 0) ? 2 : selected - 1;
+        else if (key == 's' || key == 'S')
+            selected = (selected == 2) ? 0 : selected + 1;
         else if (key == ENTER) {
             return selected + 1;
         }
