@@ -45,13 +45,8 @@ void draw_tile(int tile) {
     case '#': printf("\033[37m■\033[0m ");  break;
     case 'b': printf("● ");                 break;
     case 'S': printf("\033[97m◆\033[0m ");  break;
-<<<<<<< HEAD
     case 'a': printf("\033[35m▶\033[0m ");  break;
     case 'c': printf("\033[35m▶\033[0m ");  break;
-=======
-    //case 'a': printf("\033[31m▶\033[0m ");  break;
-    case 'c': printf("\033[34m▶\033[0m ");  break;
->>>>>>> 68f3b199e2ef67070fc0aefe865146390c8b5725
     case 'g': printf("\033[33m▶\033[0m ");  break;
     default:  printf("  ");                  break;
     }
