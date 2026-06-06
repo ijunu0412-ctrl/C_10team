@@ -2,6 +2,7 @@
 
 char  flag_window[window_row][window_col];   /* 테두리용으로만 유지 */
 short map_data[MAP_SIZE][MAP_SIZE] = { 0 };
+int counter1;
 
 /* ──────────────────────────────────────────
    타일 문자 의미
@@ -13,15 +14,44 @@ short map_data[MAP_SIZE][MAP_SIZE] = { 0 };
    'c' = 보상 깃발     파랑  ▶
    'g' = 골 깃발       노랑  ▶
 ────────────────────────────────────────── */
+void counter(int* diff)
+{
+    switch (*diff)
+    {
+    case EASY:
+        gotoxy(MAP_SIZE, 0);
+        printf("난이도:EASY");
+        gotoxy(MAP_SIZE, 1);
+        printf("이동횟수: %d", counter1);
+        break;
+    case NORMAL:
+        gotoxy(MAP_SIZE, 0);
+        printf("난이도:NORMAL");
+        gotoxy(MAP_SIZE, 1);
+        printf("이동횟수: %d", counter1);
+        break;
+    case HARD:
+        gotoxy(MAP_SIZE, 0);
+        printf("난이도:HARD");
+        gotoxy(MAP_SIZE, 1);
+        printf("이동횟수: %d", counter1);
+        break;
 
+    }
+}
 /* ── 오브젝트 한 칸 출력 (색상 포함) ─────── */
 void draw_tile(int tile) {
     switch (tile) {
     case '#': printf("\033[37m■\033[0m ");  break;
     case 'b': printf("● ");                 break;
     case 'S': printf("\033[97m◆\033[0m ");  break;
+<<<<<<< HEAD
     case 'a': printf("\033[35m▶\033[0m ");  break;
     case 'c': printf("\033[35m▶\033[0m ");  break;
+=======
+    //case 'a': printf("\033[31m▶\033[0m ");  break;
+    case 'c': printf("\033[34m▶\033[0m ");  break;
+>>>>>>> 68f3b199e2ef67070fc0aefe865146390c8b5725
     case 'g': printf("\033[33m▶\033[0m ");  break;
     default:  printf("  ");                  break;
     }
@@ -108,6 +138,7 @@ void map_main(int* diff)
     map_draw();
     main_window();
     window_draw();
+    counter(diff);
 }
 
 /* ── 정보창: flag_window는 테두리(*) 전용으로만 사용 ─ */
