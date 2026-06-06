@@ -31,8 +31,8 @@ void play_transition() {
                 case '#': printf("\033[37m■\033[0m ");  break;  /* 벽: 흰색  */
                 case 'b': printf("● ");                 break;  /* 플레이어  */
                 case 'S': printf("\033[97m◆\033[0m ");  break;  /* 시작: 밝은 흰색 */
-                case 'a': printf("\033[35m▶\033[0m ");  break;  /* 패널티: 보라 */
-                case 'c': printf("\033[35m▶\033[0m ");  break;  /* 보상: 보라   */
+                case 'a': printf("\033[31m▶\033[0m ");  break;  /* 패널티: 보라 */
+                case 'c': printf("\033[36m▶\033[0m ");  break;  /* 보상: 보라   */
                 case 'g': printf("\033[33m▶\033[0m ");  break;  /* 골: 노랑     */
                 default:  printf("  ");                  break;
                 }
