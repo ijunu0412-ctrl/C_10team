@@ -5,6 +5,7 @@ void auto_diff(int previoustile);
 int px = 1, py = MAP_SIZE - 2;
 int gamestate = STATE_PLAY;
 int previoustile = 0;
+int flagcounter = 0;
 
 DWORD msg_start_time = 0;
 int   msg_active     = 0;
@@ -132,10 +133,10 @@ static void return_to_start() {
 void auto_diff(int tile)
 {
     const char* penalty_ment[] = {
-        "설계자: 함정이었지. 처음으로 돌아가라!",
-        "설계자: 호호, 이 함정을 밟다니!",
-        "설계자: 아직 멀었군. 다시 시작이야!",
-        "설계자: 안타깝군... 출발점으로!"
+        "급한 약속이 생겨 과제를 하지 못했다...",
+        "교수님이 과제 마감일을 앞당기셨다...",
+        "원래 과제는 하루전에 하는거지!",
+        "너무 피곤하니 오늘은 그냥 자야겠다..."
     };
     int rand_idx = rand() % 4;
 
@@ -151,7 +152,7 @@ void auto_diff(int tile)
             gotoxy(2, MAP_SIZE + 2);
             printf("　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　");
             gotoxy(2, MAP_SIZE + 2);
-            printf("과제 제출에 성공하였습니다!");
+            printf("과제를 제출하였습니다!");
             play_transition();          /* ← 내부에서 3000ms 소요 */
             (*difficulty)++;
             FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
@@ -165,10 +166,17 @@ void auto_diff(int tile)
 
             printf("\n");
             printf("  =====================================\n");
-            printf("          모든 과제 제출 성공!          \n");
-            printf("        성공적으로 졸업했습니다!        \n");
+            printf("         모든 과제를 제출하였습니다!      \n");
             printf("  =====================================\n");
             printf("\n");
+            if (flagcounter > 5) {
+                printf("  대학원에 끌려갔다!\n");
+            }
+            else if (flagcounter > 3 && flagcounter <= 5) {
+                printf("  졸업 성공!\n");
+            }
+            else
+                printf("  재수강을 하게되었다...\n");
             printf("  계속하시겠습니까?\n");
             printf("\n");
 
@@ -212,9 +220,8 @@ void auto_diff(int tile)
         break;
 
     case 'c':   /* 보상 깃발 → 난이도 한 단계 하향 */
-        SHOW_MSG("설계자: 보상 깃발이군. 난이도를 한 단계 낮춰주지!");
-        if (*difficulty > EASY)
-            (*difficulty)--;
+        SHOW_MSG("교수님이 과제 제출일을 늘려주셨다!!");
+        (flagcounter)++;
         break;
     }
 }
