@@ -148,7 +148,7 @@ void auto_diff(int tile)
         
         if (rand() % 2 == 0) {
             SHOW_MSG(penalty_ment[rand_idx]);
-            SHOW_MSG("\n5일이 지나갔다...");
+            SHOW_MSG("\n 5일이 지나갔다...");
             counter1 -= 5;
         }
         else {

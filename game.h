@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <time.h>
+#define _CRT_SECURE_NO_WARNINGS
 
 #define MAP_SIZE 20
 

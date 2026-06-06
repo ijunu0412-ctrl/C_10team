@@ -55,8 +55,8 @@ int mainMenu() {
         printf("\n");
 
         for (int i = 0; i < totalLines; i++) {
-            if (i >= 4) {
-                int menuIndex = i - 4;
+            if (i >= 5) {
+                int menuIndex = i - 5;
 
                 if (menu_selected == menuIndex) {
                     printf(" >%s\n", menuDisplay[i]);
